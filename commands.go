@@ -332,6 +332,22 @@ func (c *Client) BitOpNot(destKey string, key string) *IntCmd {
 	return c.bitOp("NOT", destKey, key)
 }
 
+func (c *Client) BitPos(key string, bit int64, pos ...int64) *IntCmd {
+	args := []string{"BITPOS", key, strconv.FormatInt(bit, 10)}
+	switch len(pos) {
+	case 0:
+	case 1:
+		args = append(args, strconv.FormatInt(pos[0], 10))
+	case 2:
+		args = append(args, strconv.FormatInt(pos[0], 10), strconv.FormatInt(pos[1], 10))
+	default:
+		panic("too many arguments")
+	}
+	cmd := NewIntCmd(args...)
+	c.Process(cmd)
+	return cmd
+}
+
 func (c *Client) Decr(key string) *IntCmd {
 	cmd := NewIntCmd("DECR", key)
 	c.Process(cmd)
