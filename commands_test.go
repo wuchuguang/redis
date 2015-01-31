@@ -148,7 +148,7 @@ var _ = Describe("Commands", func() {
 			Expect(debug.Err()).To(HaveOccurred())
 			Expect(debug.Err().Error()).To(Equal("ERR no such key"))
 
-			client.Set("foo", "bar")
+			client.Set("foo", "bar", 0)
 			debug = client.DebugObject("foo")
 			Expect(debug.Err()).NotTo(HaveOccurred())
 			Expect(debug.Val()).To(ContainSubstring(`serializedlength:4`))
@@ -161,10 +161,10 @@ var _ = Describe("Commands", func() {
 	Describe("keys", func() {
 
 		It("should Del", func() {
-			set := client.Set("key1", "Hello")
+			set := client.Set("key1", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
-			set = client.Set("key2", "World")
+			set = client.Set("key2", "World", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -174,7 +174,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Dump", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -184,7 +184,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Exists", func() {
-			set := client.Set("key1", "Hello")
+			set := client.Set("key1", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -198,7 +198,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Expire", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -210,7 +210,7 @@ var _ = Describe("Commands", func() {
 			Expect(ttl.Err()).NotTo(HaveOccurred())
 			Expect(ttl.Val()).To(Equal(10 * time.Second))
 
-			set = client.Set("key", "Hello World")
+			set = client.Set("key", "Hello World", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -220,7 +220,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should ExpireAt", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -260,7 +260,7 @@ var _ = Describe("Commands", func() {
 			Expect(migrate.Err()).NotTo(HaveOccurred())
 			Expect(migrate.Val()).To(Equal("NOKEY"))
 
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -274,7 +274,7 @@ var _ = Describe("Commands", func() {
 			Expect(move.Err()).NotTo(HaveOccurred())
 			Expect(move.Val()).To(Equal(false))
 
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -298,7 +298,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Object", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -316,7 +316,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Persist", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -338,7 +338,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should PExpire", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -358,7 +358,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should PExpireAt", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -378,7 +378,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should PTTL", func() {
-			set := client.Set("key", "Hello")
+			set := client.Set("key", "Hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -398,7 +398,7 @@ var _ = Describe("Commands", func() {
 			Expect(randomKey.Err()).To(Equal(redis.Nil))
 			Expect(randomKey.Val()).To(Equal(""))
 
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -408,7 +408,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Rename", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -422,7 +422,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should RenameNX", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -436,7 +436,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Restore", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -480,7 +480,7 @@ var _ = Describe("Commands", func() {
 			Expect(ttl.Err()).NotTo(HaveOccurred())
 			Expect(ttl.Val() < 0).To(Equal(true))
 
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -494,7 +494,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Type", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -511,7 +511,7 @@ var _ = Describe("Commands", func() {
 
 		It("should Scan", func() {
 			for i := 0; i < 1000; i++ {
-				set := client.Set(fmt.Sprintf("key%d", i), "hello")
+				set := client.Set(fmt.Sprintf("key%d", i), "hello", 0)
 				Expect(set.Err()).NotTo(HaveOccurred())
 			}
 
@@ -582,7 +582,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should BitCount", func() {
-			set := client.Set("key", "foobar")
+			set := client.Set("key", "foobar", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -600,11 +600,11 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should BitOpAnd", func() {
-			set := client.Set("key1", "1")
+			set := client.Set("key1", "1", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
-			set = client.Set("key2", "0")
+			set = client.Set("key2", "0", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -618,11 +618,11 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should BitOpOr", func() {
-			set := client.Set("key1", "1")
+			set := client.Set("key1", "1", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
-			set = client.Set("key2", "0")
+			set = client.Set("key2", "0", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -636,11 +636,11 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should BitOpXor", func() {
-			set := client.Set("key1", "\xff")
+			set := client.Set("key1", "\xff", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
-			set = client.Set("key2", "\x0f")
+			set = client.Set("key2", "\x0f", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -654,7 +654,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should BitOpNot", func() {
-			set := client.Set("key1", "\x00")
+			set := client.Set("key1", "\x00", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -668,7 +668,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Decr", func() {
-			set := client.Set("key", "10")
+			set := client.Set("key", "10", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -676,7 +676,7 @@ var _ = Describe("Commands", func() {
 			Expect(decr.Err()).NotTo(HaveOccurred())
 			Expect(decr.Val()).To(Equal(int64(9)))
 
-			set = client.Set("key", "234293482390480948029348230948")
+			set = client.Set("key", "234293482390480948029348230948", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -686,7 +686,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should DecrBy", func() {
-			set := client.Set("key", "10")
+			set := client.Set("key", "10", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -700,7 +700,7 @@ var _ = Describe("Commands", func() {
 			Expect(get.Err()).To(Equal(redis.Nil))
 			Expect(get.Val()).To(Equal(""))
 
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -728,7 +728,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should GetRange", func() {
-			set := client.Set("key", "This is a string")
+			set := client.Set("key", "This is a string", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -764,7 +764,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should Incr", func() {
-			set := client.Set("key", "10")
+			set := client.Set("key", "10", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -778,7 +778,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should IncrBy", func() {
-			set := client.Set("key", "10")
+			set := client.Set("key", "10", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -788,7 +788,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should IncrByFloat", func() {
-			set := client.Set("key", "10.50")
+			set := client.Set("key", "10.50", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -796,7 +796,7 @@ var _ = Describe("Commands", func() {
 			Expect(incrByFloat.Err()).NotTo(HaveOccurred())
 			Expect(incrByFloat.Val()).To(Equal(10.6))
 
-			set = client.Set("key", "5.0e3")
+			set = client.Set("key", "5.0e3", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -847,8 +847,21 @@ var _ = Describe("Commands", func() {
 			Expect(get.Val()).To(Equal("hello"))
 		})
 
+		It("should Set with expiration", func() {
+			err := client.Set("key", "hello", 100*time.Millisecond).Err()
+			Expect(err).NotTo(HaveOccurred())
+
+			val, err := client.Get("key").Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(val).To(Equal("hello"))
+
+			Eventually(func() error {
+				return client.Get("foo").Err()
+			}, "1s", "100ms").Should(Equal(redis.Nil))
+		})
+
 		It("should SetGet", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -868,11 +881,11 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should SetNX", func() {
-			setNX := client.SetNX("key", "hello")
+			setNX := client.SetNX("key", "hello", 0)
 			Expect(setNX.Err()).NotTo(HaveOccurred())
 			Expect(setNX.Val()).To(Equal(true))
 
-			setNX = client.SetNX("key", "hello2")
+			setNX = client.SetNX("key", "hello2", 0)
 			Expect(setNX.Err()).NotTo(HaveOccurred())
 			Expect(setNX.Val()).To(Equal(false))
 
@@ -881,8 +894,39 @@ var _ = Describe("Commands", func() {
 			Expect(get.Val()).To(Equal("hello"))
 		})
 
+		It("should SetNX with expiration", func() {
+			isSet, err := client.SetNX("key", "hello", time.Second).Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(isSet).To(Equal(true))
+
+			isSet, err = client.SetNX("key", "hello2", time.Second).Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(isSet).To(Equal(false))
+
+			val, err := client.Get("key").Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(val).To(Equal("hello"))
+		})
+
+		It("should SetXX", func() {
+			isSet, err := client.SetXX("key", "hello2", time.Second).Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(isSet).To(Equal(false))
+
+			err = client.Set("key", "hello", time.Second).Err()
+			Expect(err).NotTo(HaveOccurred())
+
+			isSet, err = client.SetXX("key", "hello2", time.Second).Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(isSet).To(Equal(true))
+
+			val, err := client.Get("key").Result()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(val).To(Equal("hello2"))
+		})
+
 		It("should SetRange", func() {
-			set := client.Set("key", "Hello World")
+			set := client.Set("key", "Hello World", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -896,7 +940,7 @@ var _ = Describe("Commands", func() {
 		})
 
 		It("should StrLen", func() {
-			set := client.Set("key", "hello")
+			set := client.Set("key", "hello", 0)
 			Expect(set.Err()).NotTo(HaveOccurred())
 			Expect(set.Val()).To(Equal("OK"))
 
@@ -2171,7 +2215,7 @@ var _ = Describe("Commands", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			return multi.Exec(func() error {
-				multi.Set("key", strconv.FormatInt(v+1, 10))
+				multi.Set("key", strconv.FormatInt(v+1, 10), 0)
 				return nil
 			})
 		}
@@ -2182,7 +2226,7 @@ var _ = Describe("Commands", func() {
 				n = 1000
 			}
 
-			err := client.Set("key", "0").Err()
+			err := client.Set("key", "0", 0).Err()
 			Expect(err).NotTo(HaveOccurred())
 
 			wg := &sync.WaitGroup{}
